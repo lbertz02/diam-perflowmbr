@@ -6,7 +6,7 @@
 ]>
 <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 
-<rfc category="std" docName="draft-bertz-dime-perflowmbr-00" ipr="pre5378Trust200902">
+<rfc category="std" docName="draft-bertz-dime-perflowmbr-01" ipr="pre5378Trust200902">
  <front>
    <title>Diameter Per-Flow Max Bitrates</title>
 
@@ -45,7 +45,7 @@
    <section title="Introduction">
      <t>This document provides a mechanism for the specification of
      per-flow maximum bit rates.  Such values are used to limit
-     individual flow rates while maintaining a higher aggregate
+     individual IP flow (5 tuple) rates while maintaining a higher aggregate
      maximum bit rate across aggregate flows.</t>
      <t>It supplements the various values defined Aggregate Maximum
        Bitrates such as those specified for IP Mobility <xref target="RFC7222"/>.
@@ -96,13 +96,34 @@
   <c>Per-Flow-Max-DL-Bit-Rate</c>
   <c>TBD1</c>
   <c><xref target="perflowmaxdl"/></c>
-  <c>UTF8String</c>
+  <c>Unsiged32</c>
 
   <c>Per-Flow-Max-UL-Bit-Rate</c>
   <c>TBD2</c>
   <c><xref target="perflowmaxul"/></c>
-  <c>GROUPED</c>
+  <c>Unsiged32</c>
 </texttable>
+</section>
+<section title="Relationship to other Max Bit Rate settings" anchor="relationships">
+<t>
+    The per flow AVPs can be used with any other combination of AVPs
+    representing multiple IP flows (5 tuples).
+</t>
+<t>
+    For example, the Per-Flow-Max-DL-Bit-Rate can be used to limit the individual
+    bit rate of any single IP flow while the aggregate rate of the IP flows
+    can be limited by the Aggregate-Max-DL-Bit-Rate AVP <xref target="RFC7222"/>.
+</t>
+<t>
+    For example, setting a Per-Flow-Max-DL-Bit-Rate of 2Mbps and
+    an Aggregate-Max-DL-Bit-Rate of 20Mbps would permit up a mimimum
+    of ten IP flows of 2Mbps.
+</t>
+<t>
+    Achieving higher throughput is possible through the use of mulitple
+    connections or paths.  However, no single IP flow will dominate
+    amongst competing flows.
+</t>
 </section>
    <section anchor="Security" title="Security Considerations">
 <t>
